@@ -16,7 +16,7 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
       - name: ZIP
         run: |
-          zip -qq -r -9 ./lambda.zip aws-index.js node_modules
+          zip -qq -r -9 ./lambda.zip hello-puppeteer-index.js node_modules
           zipinfo -t lambda.zip
           # test $(du -k "lambda.zip" | cut -f1) -lt 51000 # check ZIP size is under 50MB
       - name: Set AWS credentials
