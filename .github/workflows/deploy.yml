@@ -1,0 +1,39 @@
+name: Deploy Lambda
+on:
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - name: INSTALL
+        run: |
+          npm install --only=production
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+      - name: ZIP
+        run: |
+          zip -qq -r -9 ./lambda.zip aws-index.js node_modules
+          zipinfo -t lambda.zip
+          # test $(du -k "lambda.zip" | cut -f1) -lt 51000 # check ZIP size is under 50MB
+      - name: Set AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+      - name: UPLOAD to S3 bucket
+        uses: qoqa/action-s3-cp@v1.1
+        env:
+          AWS_S3_BUCKET: 'munderseth'
+          AWS_S3_PATH:   '/'
+          FILE: './lambda.zip'
+      - name: DEPLOY bucket file to lambda
+        uses: appleboy/lambda-action@master
+        with:
+          function_name: my-lambda-with-puppeteer
+          s3_bucket: munderseth
+          s3_key: lambda.zip

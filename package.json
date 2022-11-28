@@ -1,0 +1,34 @@
+{
+    "name": "my.lambda-with-puppeteer",
+    "version": "1.0.0",
+    "description": "Sandbox for deploying puppeteer with AWS Lambda",
+    "main": "hello-puppeteer-index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/munderseth/my.lambda-with-puppeteer.git"
+    },
+    "keywords": [
+      "puppeteer",
+      "chromium",
+      "AWS",
+      "Lambda",
+      "Serverless",
+      "Examples"
+    ],
+    "author": "Mark Underseth (https://github.com/munderseth)",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/munderseth/my.lambda-with-puppeteer/issues"
+    },
+    "homepage": "https://github.com/munderseth/my.lamda-with-puppeteer#readme",
+    "dependencies": {
+      "chrome-aws-lambda": "^10.1.0",
+      "puppeteer-core": "^10.1.0"
+    },
+    "devDependencies": {
+      "puppeteer": "^19.3.0"
+    }
+  }
